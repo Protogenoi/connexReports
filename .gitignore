@@ -1,3 +1,9 @@
-/includes/config.php
-/includes/connex_database_config.php
-/includes/connex_database_config_new.php
+includes/config.php
+includes/connex_database_config.php
+includes/connex_database_config_new.php
+bootstrap
+clockpicker-gh-pages
+font-awesome
+jquery
+js
+jquery-ui-1.11.4
