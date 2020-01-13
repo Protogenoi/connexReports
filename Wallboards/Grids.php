@@ -43,19 +43,17 @@ define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta http-equiv="imagetoolbar" content="no"/>
 <link rel="stylesheet" href="/Wallboards/css/Connex.css" type="text/css"/>
 <link rel="stylesheet" href="/Wallboards/css/bootstrap-3.3.5-dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/Wallboards/css/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="/Wallboards/css/bootstrap-3.3.5-dist/css/bootstrap.css">
-<script type="text/javascript" language="javascript"
-        src="/Wallboards/css/fontawesome/svg-with-js/js/fontawesome-all.js"></script>
+<script type="text/javascript" src="/Wallboards/css/fontawesome/svg-with-js/js/fontawesome-all.js"></script>
 <style>
     .container {
         width: 95%;
     }
 </style>
-<script type="text/javascript" language="javascript" src="/js/jquery/jquery-3.0.0.min.js"></script>
+<script type="text/javascript" src="/js/jquery/jquery-3.0.0.min.js"></script>
 <script>
     function refresh_div() {
         jQuery.ajax({
@@ -240,8 +238,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id != '9996'
-    AND live_agents.status != 'PAUSED'
+    live_agents.campaign_id != '9996' AND live_agents.status != 'PAUSED'
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 
@@ -358,9 +355,9 @@ LIMIT 70");
             }*/
 
             if ($i % 5 == 0) {
-                $dyn_table .= '<tr><td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . '</strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . $result['Time'] . '</td>';
+                $dyn_table .= '<tr><td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . '</strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . substr($Time, -5) . '</td>';
             } else {
-                $dyn_table .= '<td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . ' </strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . $result['Time'] . '</td>';
+                $dyn_table .= '<td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . ' </strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . substr($Time, -5) . '</td>';
             }
             $i++;
         }
@@ -495,9 +492,9 @@ LIMIT 70");
                     break;
             }
             if ($ii % 5 == 0) {
-                $PAUSE_TABLE .= '<tr><td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . '</strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . $result['Time'] . '</td>';
+                $PAUSE_TABLE .= '<tr><td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . '</strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . $Time . '</td>';
             } else {
-                $PAUSE_TABLE .= '<td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . ' </strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . $result['Time'] . '</td>';
+                $PAUSE_TABLE .= '<td class=' . $class . '><strong style="font-size: 30px;">' . $result['full_name'] . ' </strong><br><i class="fa ' . $PAUSE_CODE_I_CLASS . '"></i> ' . $Time . '</td>';
             }
             $ii++;
         }
