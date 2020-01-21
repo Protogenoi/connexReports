@@ -6,8 +6,8 @@ $dateTo = filter_input(INPUT_POST, 'dateTo', FILTER_SANITIZE_FULL_SPECIAL_CHARS)
 $dateFrom = filter_input(INPUT_POST, 'dateFrom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $timeTo = filter_input(INPUT_POST, 'timeTo', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $timeFrom = filter_input(INPUT_POST, 'timeFrom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$user = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$dispo = filter_input(INPUT_POST, 'dispo', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$user = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING);
+$dispo = filter_input(INPUT_POST, 'dispo', FILTER_SANITIZE_STRING);
 $callTime = filter_input(INPUT_POST, 'callTime', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');

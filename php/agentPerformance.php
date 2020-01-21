@@ -38,6 +38,21 @@ $sLAgentSales = 0;
 $sJaAgentSales = 0;
 $cDAgentSales = 0;
 
+$lRAgentSales = 0;
+$sKAgentSales = 0;
+$mRAgentSales = 0;
+
+$jRAgentSales = 0;
+$nHAgentSales = 0;
+$cGAgentSales = 0;
+$eMAgentSales = 0;
+$nJAgentSales = 0;
+$dKAgentSales = 0;
+$sTAgentSales = 0;
+$shHAgentSales = 0;
+$raJAgentSales = 0;
+$aLAgentSales = 0;
+
 
     $query = $pdo->prepare("SELECT 
     full_name, COUNT(*) AS totalSales
@@ -54,7 +69,7 @@ WHERE
         WHERE
             event_time >= CURDATE()
                 AND status = 'SALE')
-        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300') AND event_time >= CURDATE()
+        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS') AND event_time >= CURDATE()
 GROUP BY agent_log.user");
 
     $queryGetXfers = $pdo->prepare("SELECT 
@@ -169,6 +184,45 @@ if ($query->rowCount() > 0) {
                 break;
                 case 'Natasha Greene';
                 $nGAgentSales = $result['totalSales'];
+                break;
+                case 'Luke Ratner';
+                $lRAgentSales = $result['totalSales'];
+                break;
+                case 'Sharne Knight';
+                $sKAgentSales = $result['totalSales'];
+                break;
+                case 'Marc Richards';
+                $mRAgentSales = $result['totalSales'];
+                break;
+            case 'Abi Lesuisse';
+                $aLAgentSales = $result['totalSales'];
+                break;
+            case 'Neil Herbert';
+                $nHAgentSales = $result['totalSales'];
+                break;
+            case 'Casey Grey';
+                $cGAgentSales = $result['totalSales'];
+                break;
+            case 'Ebony Mia';
+                $eMAgentSales = $result['totalSales'];
+                break;
+            case 'Nicola James';
+                $nJAgentSales = $result['totalSales'];
+                break;
+            case 'Daniel Kirkhouse';
+                $dKAgentSales = $result['totalSales'];
+                break;
+            case 'Sara Tristram';
+                $sTAgentSales = $result['totalSales'];
+                break;
+            case 'Shannon Hanney';
+                $shHAgentSales = $result['totalSales'];
+                break;
+            case 'Rachel James';
+                $raJAgentSales = $result['totalSales'];
+                break;
+            case 'Jeff Rees';
+                $jRAgentSales = $result['totalSales'];
                 break;
             default;
                 $agentSales = 0;
@@ -311,6 +365,45 @@ if ($queryGetXfers->rowCount() > 0) {
                 case 'Natasha Greene';
                 $agentSales = $nGAgentSales;
                 break;
+                case 'Luke Ratner';
+                $agentSales = $lRAgentSales;
+                break;
+                case 'Sharne Knight';
+                $agentSales = $sKAgentSales;
+                break;
+                case 'Marc Richards';
+                $agentSales = $mRAgentSales;
+                break;
+                case 'Abi Lesuisse';
+                $agentSales = $aLAgentSales;
+                break;
+                case 'Neil Herbert';
+                $agentSales = $nHAgentSales;
+                break;
+                case 'Casey Grey';
+                $agentSales = $cGAgentSales;
+                break;
+                case 'Ebony Mia';
+                $agentSales = $eMAgentSales;
+                break;
+                case 'Nicola James';
+                $agentSales = $nJAgentSales;
+                break;
+                case 'Daniel Kirkhouse';
+                $agentSales = $dKAgentSales;
+                break;
+                case 'Sara Tristram';
+                $agentSales = $sTAgentSales;
+                break;
+                case 'Shannon Hanney';
+                $agentSales = $shHAgentSales;
+                break;
+                case 'Rachel James';
+                $agentSales = $raJAgentSales;
+                break;
+                case 'Jeff Ress';
+                $agentSales = $jRAgentSales;
+                break;
             default;
                 $agentSales = 0;
         endswitch;
@@ -333,7 +426,7 @@ if ($queryGetXfers->rowCount() > 0) {
 
         $agentName = str_replace('-', ' ', $result['full_name']);
 
-        $teamArray = ['Rich','Kyle','James',1700];
+        $teamArray = ['Rich','Kyle','James',1700, 'NEW_STARTERS'];
 
         if(in_array($displayTeam, $teamArray)) {
 
