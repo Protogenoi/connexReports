@@ -75,7 +75,7 @@ WHERE
         WHERE
             DATE(event_time) BETWEEN :dateFrom AND :dateTo AND TIME(event_time) BETWEEN :timeFrom AND :timeTo
                 AND status = 'SALE')
-        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS')
+        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS', 'TeamKyleRich')
 GROUP BY agent_log.user");
     $query->bindParam(':dateFrom', $dateFrom, PDO::PARAM_STR);
     $query->bindParam(':dateTo', $dateTo, PDO::PARAM_STR);

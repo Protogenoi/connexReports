@@ -69,7 +69,7 @@ WHERE
         WHERE
             event_time >= CURDATE()
                 AND status = 'SALE')
-        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS') AND event_time >= CURDATE()
+        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS', 'TeamKyleRich') AND event_time >= CURDATE()
 GROUP BY agent_log.user");
 
     $queryGetXfers = $pdo->prepare("SELECT 
