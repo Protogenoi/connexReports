@@ -426,7 +426,7 @@ if ($queryGetXfers->rowCount() > 0) {
 
         $agentName = str_replace('-', ' ', $result['full_name']);
 
-        $teamArray = ['Rich','Kyle','James',1700, 'NEW_STARTERS'];
+        $teamArray = ['Rich','Kyle','James',1700, 'NEW_STARTERS','TeamKyleRich'];
 
         if(in_array($displayTeam, $teamArray)) {
 
