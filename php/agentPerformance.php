@@ -88,7 +88,7 @@ WHERE
     event_time >= CURDATE()
         AND lead_id != ''
 GROUP BY agent_log.user
-ORDER BY user_group , XFERS");
+ORDER BY full_name , XFERS");
 
     $query->execute();
 if ($query->rowCount() > 0) {
