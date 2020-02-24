@@ -69,7 +69,7 @@ WHERE
         WHERE
             event_time >= CURDATE()
                 AND status = 'SALE')
-        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS', 'TeamKyleRich') AND event_time >= CURDATE()
+        AND agent_log.user_group IN ('TeamRich' , 'TeamKyle', 'TeamJames','1700','1700_1300','NEW_STARTERS', 'TeamKyleRich', 'RENEW_AND_CLOSERS') AND event_time >= CURDATE()
 GROUP BY agent_log.user");
 
     $queryGetXfers = $pdo->prepare("SELECT 
@@ -426,7 +426,7 @@ if ($queryGetXfers->rowCount() > 0) {
 
         $agentName = str_replace('-', ' ', $result['full_name']);
 
-        $teamArray = ['Rich','Kyle','James',1700, 'NEW_STARTERS','TeamKyleRich'];
+        $teamArray = ['Rich','Kyle','James',1700, 'NEW_STARTERS','TeamKyleRich', 'RENEW_AND_CLOSERS'];
 
         if(in_array($displayTeam, $teamArray)) {
 
