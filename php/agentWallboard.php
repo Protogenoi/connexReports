@@ -73,6 +73,8 @@ WHERE live_agents.campaign_id = '9996' ORDER BY live_agents.status , callFinish 
     if ($Closer_query->rowCount() > 0) {
         while ($result = $Closer_query->fetch(PDO::FETCH_ASSOC)) {
 
+            $callFinish = $result['callFinish'];
+
             if (isset($result['status'])) {
                 $status = $result['status'];
             }
@@ -144,6 +146,7 @@ WHERE live_agents.campaign_id = '9996' ORDER BY live_agents.status , callFinish 
             $sendToADL->setColour($class2);
             $sendToADL->setAgent($full_name);
             $sendToADL->setStatus($status);
+            $sendToADL->setCallFinish($callFinish);
             $sendToADL->setTime($Time);
             $sendToADL->setUserGroup('Closer');
             $sendToADL->sendAgentWallboardToADL();
@@ -185,6 +188,8 @@ LIMIT 70");
     $query->execute();
     if ($query->rowCount() > 0) {
         while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
+
+            $callFinish = $result['callFinish'];
 
             if (isset($result['status'])) {
                 $status = $result['status'];
@@ -279,6 +284,7 @@ LIMIT 70");
             $sendToADL->setColour($class);
             $sendToADL->setAgent($result['full_name']);
             $sendToADL->setStatus($status);
+            $sendToADL->setCallFinish($callFinish);
             $sendToADL->setUserGroup('Agent');
             $sendToADL->setTime(substr($Time, -5));
             $sendToADL->sendAgentWallboardToADL();

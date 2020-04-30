@@ -45,6 +45,7 @@ class agentWallboard
     private $colour;
     private $day;
     private $userGroup;
+    private $callFinish;
 
     public function __construct(PDO $pdo)
     {
@@ -62,7 +63,8 @@ class agentWallboard
         $query->execute();
         if ($query->rowCount() == 0) {
 
-            $query = $this->pdo->prepare("INSERT INTO agentWallbaord SET agent=:agent, userGroup=:userGroup, status=:status, time=:time, colour=:colour, day= CURDATE()");
+            $query = $this->pdo->prepare("INSERT INTO agentWallbaord SET callFinish=:callFinish, agent=:agent, userGroup=:userGroup, status=:status, time=:time, colour=:colour, day= CURDATE()");
+            $query->bindParam(':callFinish', $this->callFinish, PDO::PARAM_STR);
             $query->bindParam(':agent', $this->agent, PDO::PARAM_STR);
             $query->bindParam(':userGroup', $this->userGroup, PDO::PARAM_STR);
             $query->bindParam(':status', $this->status, PDO::PARAM_STR);
@@ -71,8 +73,9 @@ class agentWallboard
             $query->execute();
 
         } else {
-            $query = $this->pdo->prepare("UPDATE agentWallbaord SET status=:status, time=:time, userGroup=:userGroup, colour=:colour WHERE agent=:agent AND DATE(day)= CURDATE()");
+            $query = $this->pdo->prepare("UPDATE agentWallbaord SET callFinish=:callFinish, status=:status, time=:time, userGroup=:userGroup, colour=:colour WHERE agent=:agent AND DATE(day)= CURDATE()");
             $query->bindParam(':agent', $this->agent, PDO::PARAM_STR);
+            $query->bindParam(':callFinish', $this->callFinish, PDO::PARAM_STR);
             $query->bindParam(':userGroup', $this->userGroup, PDO::PARAM_STR);
             $query->bindParam(':status', $this->status, PDO::PARAM_STR);
             $query->bindParam(':time', $this->time, PDO::PARAM_STR);
@@ -130,6 +133,14 @@ class agentWallboard
     public function setUserGroup($userGroup)
     {
         $this->userGroup = $userGroup;
+    }
+
+    /**
+     * @param mixed $callFinish
+     */
+    public function setCallFinish($callFinish)
+    {
+        $this->callFinish = $callFinish;
     }
 
 
