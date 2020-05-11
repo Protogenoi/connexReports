@@ -36,8 +36,6 @@
  */
 
 
-use PDO;
-
 class callTimes
 {
 
