@@ -66,7 +66,7 @@ FROM
     users ON live_agents.user = users.user
         JOIN
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
-WHERE live_agents.campaign_id = '9996' ORDER BY live_agents.status , callFinish DESC LIMIT 10");
+WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , callFinish DESC LIMIT 10");
 
 
     $Closer_query->execute();
