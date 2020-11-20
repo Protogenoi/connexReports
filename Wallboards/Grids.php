@@ -86,7 +86,7 @@ define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_
     TIMEDIFF(CURRENT_TIMESTAMP, last_call_finish) AS logTime,
     live_agents.lead_id,
     live_agents.uniqueid,
-    comments,
+    live_agents.comments,
     sub_status,
     dead_epoch,
     dead_sec,

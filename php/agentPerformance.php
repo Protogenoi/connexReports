@@ -2,6 +2,7 @@
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 $totalSales = 0;
 $totalXfers = 0;

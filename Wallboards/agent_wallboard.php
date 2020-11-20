@@ -51,11 +51,17 @@ $EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
 <link rel="stylesheet" href="/Wallboards/css/bootstrap-3.3.5-dist/css/bootstrap.css">
 <script type="text/javascript" src="/Wallboards/css/fontawesome/svg-with-js/js/fontawesome-all.js"></script>
 <style>
-    @keyframes blinker {
-        50% {
-            opacity: 0;
-        }
+    .blinking{
+        animation:blinkingText 1.2s infinite;
     }
+    @keyframes blinkingText{
+        0%{     color: #ffffff;    }
+        49%{    color: #ffffff; }
+        60%{    color: transparent; }
+        99%{    color:transparent;  }
+        100%{   color: #ffffff;    }
+    }
+
 </style>
 <script type="text/javascript" src="/js/jquery/jquery-3.0.0.min.js"></script>
 <script>
@@ -96,7 +102,7 @@ if(isset($EXECUTE) && $EXECUTE == 1) {
     TIMEDIFF(CURRENT_TIMESTAMP, last_call_finish) AS logTime,
     live_agents.lead_id,
     live_agents.uniqueid,
-    comments,
+    live_agents.comments,
     sub_status,
     dead_epoch,
     dead_sec,
@@ -136,14 +142,6 @@ LIMIT 10");
                 }
                 if (isset($result['full_name'])) {
                     $full_name = $result['full_name'];
-
-                    switch ($full_name) {
-                        case("Jade Cooper"):
-                            $full_name = "Jade";
-                            break;
-                    }
-
-
                 }
 
                 if ($status == 'INCALL' || $status == 'MANUAL') {
@@ -247,7 +245,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id IN ('10','1300','1700','1702')
+    live_agents.campaign_id IN ('10','1300','1700','1702','1701', '1703',1704)
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 
@@ -349,11 +347,13 @@ LIMIT 70");
                     default:
                         $class = 'status_READY';
                         break;
-                } ?>
-                <tr class="<?php echo $class; ?>">
-                    <td><strong><?php echo $result['full_name']; ?></strong></td>
-                    <td><?php echo $status; ?></td>
-                    <td><?php echo substr($Time, -5); ?></td>
+                }
+
+                ?>
+                <tr class="<?php echo $class;?>">
+                    <td><strong><span <?php if(substr($Time, -5) >= 7 && $status == 'INCALL') { echo "class='blinking'"; } ?>><?php echo $result['full_name']; ?></span></strong></td>
+                    <td><span <?php if(substr($Time, -5) >= 7 && $status == 'INCALL') { echo "class='blinking'"; } ?>><?php echo $status; ?></span></td>
+                    <td><span <?php if(substr($Time, -5) >= 7 && $status == 'INCALL') { echo "class='blinking'"; } ?>><?php echo substr($Time, -5); ?></span></td>
                 </tr>
 
                 <?php

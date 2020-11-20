@@ -49,6 +49,7 @@ class agentLog
     private $wait_sec;
     private $pause_sec;
     private $full_name;
+    private $uniqueid;
 
     public function __construct(PDO $pdo)
     {
@@ -60,7 +61,7 @@ class agentLog
     public function getTodayAgentLogByFullName()
     {
 
-        $query = $this->pdo->prepare("SELECT event_time, agent_log_id, full_name, pause_sec, wait_sec, talk_sec, dispo_sec, dead_sec, status, lead_id, campaign_id FROM agent_log JOIN users ON users.user = agent_log.user WHERE event_time >= CURDATE() AND full_name=:fullName");
+        $query = $this->pdo->prepare("SELECT event_time, agent_log_id, full_name, pause_sec, wait_sec, talk_sec, dispo_sec, dead_sec, status, lead_id, campaign_id, uniqueid FROM agent_log JOIN users ON users.user = agent_log.user WHERE event_time >= CURDATE() AND full_name=:fullName");
         $query->bindParam(':fullName', $this->full_name, PDO::PARAM_STR);
         $query->execute();
         if ($query->rowCount() > 0) {
@@ -81,7 +82,8 @@ class agentLog
         $query->execute();
         if ($query->rowCount() == 0) {
 
-            $query = $this->pdo->prepare("INSERT INTO agentLog SET event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, agent_log_id=:agent_log_id, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec");
+            $query = $this->pdo->prepare("INSERT INTO agentLog SET uniqueid=:uniqueid, event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, agent_log_id=:agent_log_id, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec");
+            $query->bindParam(':uniqueid', $this->uniqueid, PDO::PARAM_STR);
             $query->bindParam(':event_time', $this->event_time, PDO::PARAM_STR);
             $query->bindParam(':full_name', $this->full_name, PDO::PARAM_STR);
             $query->bindParam(':status', $this->status, PDO::PARAM_STR);
@@ -95,7 +97,8 @@ class agentLog
             $query->execute();
 
         } else {
-            $query = $this->pdo->prepare("UPDATE agentLog SET event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec WHERE agent_log_id=:agent_log_id");
+            $query = $this->pdo->prepare("UPDATE agentLog SET uniqueid=:uniqueid, event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec WHERE agent_log_id=:agent_log_id");
+            $query->bindParam(':uniqueid', $this->uniqueid, PDO::PARAM_STR);
             $query->bindParam(':event_time', $this->event_time, PDO::PARAM_STR);
             $query->bindParam(':full_name', $this->full_name, PDO::PARAM_STR);
             $query->bindParam(':status', $this->status, PDO::PARAM_STR);
@@ -191,6 +194,14 @@ class agentLog
     public function setFullName($full_name)
     {
         $this->full_name = $full_name;
+    }
+
+    /**
+     * @param mixed $uniqueid
+     */
+    public function setUniqueid($uniqueid)
+    {
+        $this->uniqueid = $uniqueid;
     }
 
 }

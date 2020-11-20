@@ -251,7 +251,7 @@ FROM
     users
     LEFT JOIN user_log on user_log.user = users.user
 WHERE
-    users.user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich') GROUP BY user_log.user ORDER BY users.full_name");
+    users.user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704) GROUP BY user_log.user ORDER BY users.full_name");
                                     $query->execute();
                                     if ($query->rowCount() > 0) {
                                         while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -386,7 +386,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020'
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich') AND status=:DISPO AND length_in_sec >=:callTime
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704) AND status=:DISPO AND length_in_sec >=:callTime
 AND recording_log.user=:USER
 ORDER BY recording_id
 LIMIT 100");
@@ -405,7 +405,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020'
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich')
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704)
 AND recording_log.user=:USER
 ORDER BY recording_id
 LIMIT 100");
@@ -422,7 +422,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020'
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich') AND status=:DISPO
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704) AND status=:DISPO
 AND recording_log.user=:USER
 ORDER BY recording_id
 LIMIT 100");
@@ -440,7 +440,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020' AND length_in_sec >=:callTime AND recording_log.user=:USER
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich')
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704)
 ORDER BY recording_id
 LIMIT 100");
                         $query->bindParam(':DATE', $date, PDO::PARAM_STR);
@@ -457,7 +457,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020'
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich') AND status=:DISPO
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704) AND status=:DISPO
 ORDER BY recording_id
 LIMIT 100");
                         $query->bindParam(':DATE', $date, PDO::PARAM_STR);
@@ -473,7 +473,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020' AND length_in_sec >=:callTime AND status=:DISPO
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich')
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704)
 ORDER BY recording_id
 LIMIT 100");
                         $query->bindParam(':DATE', $date, PDO::PARAM_STR);
@@ -490,7 +490,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020' AND length_in_sec >=:callTime
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich')
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704)
 ORDER BY recording_id
 LIMIT 100");
                         $query->bindParam(':DATE', $date, PDO::PARAM_STR);
@@ -506,7 +506,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE AND YEAR(start_time) = '2020'
-        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich')
+        AND user_group IN ('TeamKyle','TeamRich','TeamJames', 'TeamKyleRich',1701,1700,1703,1704)
 ORDER BY recording_id
 LIMIT 100");
                         $query->bindParam(':DATE', $date, PDO::PARAM_STR);
@@ -649,7 +649,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id IN(1700,1300)
+    live_agents.campaign_id IN(1700,1300,1704,1701,1702)
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 

@@ -1,6 +1,7 @@
 <?php
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 $totalSales = 0;
 $totalXfers = 0;

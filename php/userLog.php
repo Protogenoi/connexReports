@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 $query = $pdo->prepare("SELECT user_log_id, full_name, event, event_date, event_epoch, campaign_id FROM user_log JOIN users ON users.user = user_log.user where event_date >=CURDATE();");
 $query->execute();

@@ -46,6 +46,7 @@ class agentWallboard
     private $day;
     private $userGroup;
     private $callFinish;
+    private $leadID;
 
     public function __construct(PDO $pdo)
     {
@@ -63,8 +64,9 @@ class agentWallboard
         $query->execute();
         if ($query->rowCount() == 0) {
 
-            $query = $this->pdo->prepare("INSERT INTO agentWallbaord SET callFinish=:callFinish, agent=:agent, userGroup=:userGroup, status=:status, time=:time, colour=:colour, day= CURDATE()");
+            $query = $this->pdo->prepare("INSERT INTO agentWallbaord SET leadID=:leadID, callFinish=:callFinish, agent=:agent, userGroup=:userGroup, status=:status, time=:time, colour=:colour, day= CURDATE()");
             $query->bindParam(':callFinish', $this->callFinish, PDO::PARAM_STR);
+            $query->bindParam(':leadID', $this->leadID, PDO::PARAM_STR);
             $query->bindParam(':agent', $this->agent, PDO::PARAM_STR);
             $query->bindParam(':userGroup', $this->userGroup, PDO::PARAM_STR);
             $query->bindParam(':status', $this->status, PDO::PARAM_STR);
@@ -73,8 +75,9 @@ class agentWallboard
             $query->execute();
 
         } else {
-            $query = $this->pdo->prepare("UPDATE agentWallbaord SET callFinish=:callFinish, status=:status, time=:time, userGroup=:userGroup, colour=:colour WHERE agent=:agent AND DATE(day)= CURDATE()");
+            $query = $this->pdo->prepare("UPDATE agentWallbaord SET leadID=:leadID, callFinish=:callFinish, status=:status, time=:time, userGroup=:userGroup, colour=:colour WHERE agent=:agent AND DATE(day)= CURDATE()");
             $query->bindParam(':agent', $this->agent, PDO::PARAM_STR);
+            $query->bindParam(':leadID', $this->leadID, PDO::PARAM_STR);
             $query->bindParam(':callFinish', $this->callFinish, PDO::PARAM_STR);
             $query->bindParam(':userGroup', $this->userGroup, PDO::PARAM_STR);
             $query->bindParam(':status', $this->status, PDO::PARAM_STR);
@@ -141,6 +144,14 @@ class agentWallboard
     public function setCallFinish($callFinish)
     {
         $this->callFinish = $callFinish;
+    }
+
+    /**
+     * @param mixed $leadID
+     */
+    public function setLeadID($leadID)
+    {
+        $this->leadID = $leadID;
     }
 
 

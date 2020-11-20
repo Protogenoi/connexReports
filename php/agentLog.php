@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 $query = $pdo->prepare("SELECT full_name FROM user_log JOIN users ON users.user = user_log.user where event_date >=CURDATE() GROUP BY full_name");
 $query->execute();
@@ -42,6 +43,7 @@ if ($query->rowCount() > 0) {
 
             $sendToADL->setFullName($agentName);
             $sendToADL->setPauseSec($item['pause_sec']);
+            $sendToADL->setUniqueid($item['uniqueid']);
             $sendToADL->setWaitSec($item['wait_sec']);
             $sendToADL->setTalkSec($item['talk_sec']);
             $sendToADL->setDispoSec($item['dispo_sec']);

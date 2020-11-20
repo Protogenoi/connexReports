@@ -40,7 +40,8 @@ define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_
 $EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
-    require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 require_once(BASE_URL . '/includes/ADL_PDO_CON.php');
 require_once(BASE_URL . '/class/agentWallboard.php');
@@ -54,7 +55,7 @@ $sendToADL = new agentWallboard($adlPdo);
     TIMEDIFF(CURRENT_TIMESTAMP, last_call_finish) AS logTime,
     live_agents.lead_id,
     live_agents.uniqueid,
-    comments,
+    live_agents.comments,
     sub_status,
     dead_epoch,
     dead_sec,
@@ -92,14 +93,6 @@ WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , call
             }
             if (isset($result['full_name'])) {
                 $full_name = $result['full_name'];
-
-                switch ($full_name) {
-                    case("Jade Cooper"):
-                        $full_name = "Jade";
-                        break;
-                }
-
-
             }
 
             if ($status == 'INCALL' || $status == 'MANUAL') {
@@ -110,6 +103,10 @@ WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , call
 
             if (isset($result['sub_status'])) {
                 $subStatus = $result['sub_status'];
+            }
+
+            if (isset($result['lead_id'])) {
+                $leadID = $result['lead_id'];
             }
 
             $time2 = $result['callFinish'];
@@ -144,6 +141,7 @@ WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , call
 
 
             $sendToADL->setColour($class2);
+            $sendToADL->setLeadID($leadID);
             $sendToADL->setAgent($full_name);
             $sendToADL->setStatus($status);
             $sendToADL->setCallFinish($callFinish);
@@ -181,7 +179,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id IN ('10','1300','1700','1702')
+    live_agents.campaign_id IN ('10','1300','1700','1702',1701)
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 
@@ -214,6 +212,10 @@ LIMIT 70");
 
             if (isset($result['sub_status'])) {
                 $subStatus = $result['sub_status'];
+            }
+
+            if (isset($result['lead_id'])) {
+                $leadID = $result['lead_id'];
             }
 
             if (isset($result['dead_epoch'])) {
@@ -282,6 +284,7 @@ LIMIT 70");
             }
 
             $sendToADL->setColour($class);
+            $sendToADL->setLeadID($leadID);
             $sendToADL->setAgent($result['full_name']);
             $sendToADL->setStatus($status);
             $sendToADL->setCallFinish($callFinish);

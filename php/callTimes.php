@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
+//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 $query = $pdo->prepare("SELECT full_name, COUNT(*) AS callCount, SUM(talk_sec) AS talkSec FROM agent_log LEFT JOIN users ON users.user = agent_log.user WHERE event_time >= CURDATE() AND lead_id != '' GROUP BY agent_log.user");
 $query->execute();

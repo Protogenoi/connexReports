@@ -68,7 +68,7 @@ FROM
     users ON users.user = recording_log.user
 WHERE
         DATE(start_time) =:DATE
-        AND user_group IN (1700 , 1300)
+        AND user_group IN (1700 , 1300,1704)
         AND length_in_min BETWEEN 0.20 AND 5.00
 AND status != 'DNC'
 ORDER BY RAND()
