@@ -115,7 +115,7 @@ FROM
         JOIN
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
 WHERE
-    live_agents.campaign_id = '9996'
+    live_agents.campaign_id = 1002
 ORDER BY live_agents.status , callFinish DESC
 LIMIT 10");
 
@@ -245,7 +245,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id IN ('10','1300','1700','1702','1701', '1703',1704)
+    live_agents.campaign_id IN (1001)
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 
