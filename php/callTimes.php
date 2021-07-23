@@ -24,14 +24,6 @@ if ($query->rowCount() > 0) {
 
         $agentName = str_replace('-', ' ', $fullName);
 
-        if($agentName == 'KyleEdwards') {
-            $agentName = 'Kyle Edwards';
-        } elseif($agentName == 'Carys') {
-            $agentName = 'Carys Riley';
-        } elseif($agentName == 'Ricky') {
-            $agentName = 'Ricky Derrick';
-        }
-
         $sendToADL = new callTimes($adlPdo);
         $sendToADL->setFullName($agentName);
         $sendToADL->setCallCount($callCount);

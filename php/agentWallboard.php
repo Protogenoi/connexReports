@@ -67,7 +67,7 @@ FROM
     users ON live_agents.user = users.user
         JOIN
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
-WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , callFinish DESC LIMIT 10");
+WHERE live_agents.campaign_id IN (1002) ORDER BY live_agents.status , callFinish DESC LIMIT 10");
 
 
     $Closer_query->execute();
@@ -139,7 +139,6 @@ WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , call
             }
             echo "<td class='$class2'>$full_name <br>$Time</td>";
 
-
             $sendToADL->setColour($class2);
             $sendToADL->setLeadID($leadID);
             $sendToADL->setAgent($full_name);
@@ -151,7 +150,6 @@ WHERE live_agents.campaign_id IN (9996, 9001) ORDER BY live_agents.status , call
 
         }
     }
-
 
     //END OF CLOSERS
 
@@ -179,7 +177,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id IN ('10','1300','1700','1702',1701)
+    live_agents.campaign_id IN (1001)
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 

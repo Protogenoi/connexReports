@@ -51,7 +51,7 @@ $sendToADL = new inboundOutboundLog($adlPdo);
 $inboundCalls = 0;
 $outboundCalls = 0;
 
-$query = $pdo->prepare("SELECT count(*) AS callCount FROM outbound_log WHERE call_date >= CURDATE() AND campaign_id IN (1700,1701,1703,9996)");
+$query = $pdo->prepare("SELECT count(*) AS callCount FROM outbound_log WHERE call_date >= CURDATE() AND campaign_id IN (1001)");
 $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {

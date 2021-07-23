@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * ------------------------------------------------------------------------
  *                               ADL CRM
  * ------------------------------------------------------------------------
@@ -28,37 +28,34 @@
  *  Twitter API - https://developer.twitter.com
  *  Webshim - https://github.com/aFarkas/webshim/releases/latest
  *
- */
+*/
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$ADL_DB_CONFIG = require_once(BASE_URL . '/includes/adl_database_config.php');
 
-define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
+class ADLDatabaseConnection
+{
 
+    public static function make($ADL_DB_CONFIG)
+    {
 
-$EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
+        try {
 
+            return new PDO (
 
-require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
-//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
+                $ADL_DB_CONFIG['connection'] . ';port=' . $ADL_DB_CONFIG['port'] . ';dbname=' . $ADL_DB_CONFIG['name'],
+                $ADL_DB_CONFIG['username'],
+                $ADL_DB_CONFIG['password'],
+                $ADL_DB_CONFIG['options']
 
+            );
 
-require_once(BASE_URL . '/includes/ADL_PDO_CON.php');
-require_once(BASE_URL . '/class/lists.php');
+        } catch (PDOException $ex) {
+            die($ex->getMessage());
 
-$sendToADL = new lists($adlPdo);
-
-$query = $pdo->prepare("SELECT list_id, list_name, active FROM lists WHERE campaign_id IN(1001)");
-$query->execute();
-if ($query->rowCount() > 0) {
-    while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
-
-        $sendToADL->setListId($result['list_id']);
-        $sendToADL->setListName($result['list_name']);
-        $sendToADL->setActive($result['active']);
-        $sendToADL->sendListstoADL();
+        }
 
     }
+
 }
 
+$adlPdo = ADLDatabaseConnection::make($ADL_DB_CONFIG['database']);

@@ -21,16 +21,7 @@ if ($query->rowCount() > 0) {
 
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-
         $agentName = $result['full_name'];
-
-        if($agentName == 'KyleEdwards') {
-            $agentName = 'Kyle Edwards';
-        } elseif($agentName == 'Carys') {
-            $agentName = 'Carys Riley';
-        } elseif($agentName == 'Ricky') {
-            $agentName = 'Ricky Derrick';
-        }
 
         $getUserLog->setFullName($agentName);
         $result = $getUserLog->getTodayUserLogByFullName();
