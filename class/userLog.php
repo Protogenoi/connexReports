@@ -57,7 +57,7 @@ class userLog
     public function getTodayUserLogByFullName()
     {
 
-        $query = $this->pdo->prepare("SELECT user_log_id, full_name, event, event_date, event_epoch, campaign_id FROM user_log JOIN users ON users.user = user_log.user where event_date >=CURDATE() AND full_name=:fullName");
+        $query = $this->pdo->prepare("SELECT user_log_id, full_name, event, event_date, '0' AS event_epoch, campaign_id FROM user_log JOIN users ON users.user = user_log.user where event_date >=CURDATE() AND full_name=:fullName");
         $query->bindParam(':fullName', $this->full_name, PDO::PARAM_STR);
         $query->execute();
         if ($query->rowCount() > 0) {
