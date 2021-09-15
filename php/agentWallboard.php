@@ -4,7 +4,7 @@
  *                               ADL CRM
  * ------------------------------------------------------------------------
  *
- * Copyright © 2018 ADL CRM All rights reserved.
+ * Copyright © 2021 ADL CRM All rights reserved.
  *
  * Unauthorised copying of this file, via any medium is strictly prohibited.
  * Unauthorised distribution of this file, via any medium is strictly prohibited.
@@ -41,7 +41,6 @@ $EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
-//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 require_once(BASE_URL . '/includes/ADL_PDO_CON.php');
 require_once(BASE_URL . '/class/agentWallboard.php');
@@ -68,8 +67,6 @@ FROM
         JOIN
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
 WHERE live_agents.campaign_id IN (1002) ORDER BY live_agents.status , callFinish DESC LIMIT 10");
-
-
     $Closer_query->execute();
     if ($Closer_query->rowCount() > 0) {
         while ($result = $Closer_query->fetch(PDO::FETCH_ASSOC)) {

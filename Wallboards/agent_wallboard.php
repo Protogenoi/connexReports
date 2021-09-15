@@ -81,13 +81,7 @@ $EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
 <body>
 <?php
 
-if(isset($EXECUTE) && $EXECUTE == 1) {
-    require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
-} else {
-
     require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
-
-}
 
 ?>
 
