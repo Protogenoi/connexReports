@@ -44,6 +44,8 @@ class lists
     private $active;
     private $totalRecords;
     private $totalDialled;
+    private $campaignId;
+    private $entryDate;
 
 
     public function __construct(PDO $pdo)
@@ -70,7 +72,9 @@ class lists
         $query->execute();
         if ($query->rowCount() > 0) {
 
-            $query = $this->pdo->prepare("UPDATE lists SET totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId WHERE list_id=:list_id LIMIT 1");
+            $query = $this->pdo->prepare("UPDATE lists SET campaign_id=:campaignId, entryDate=:entryDate, totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId WHERE list_id=:list_id LIMIT 1");
+            $query->bindParam(':campaignId', $this->campaignId, PDO::PARAM_STR);
+            $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
             $query->bindParam(':totalRecords', $this->totalRecords, PDO::PARAM_STR);
             $query->bindParam(':active', $this->active, PDO::PARAM_STR);
@@ -80,7 +84,9 @@ class lists
 
         } else {
 
-            $query = $this->pdo->prepare("INSERT INTO lists SET added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
+            $query = $this->pdo->prepare("INSERT INTO lists SET campaign_id=:campaignId, entryDate=:entryDate, added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
+            $query->bindParam(':campaignId', $this->campaignId, PDO::PARAM_STR);
+            $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
             $query->bindParam(':totalRecords', $this->totalRecords, PDO::PARAM_STR);
             $query->bindParam(':active', $this->active, PDO::PARAM_STR);
@@ -132,6 +138,22 @@ class lists
     public function setTotalDialled($totalDialled)
     {
         $this->totalDialled = $totalDialled;
+    }
+
+    /**
+     * @param mixed $campaignId
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+    }
+
+    /**
+     * @param mixed $entryDate
+     */
+    public function setEntryDate($entryDate)
+    {
+        $this->entryDate = $entryDate;
     }
 
 
