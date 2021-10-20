@@ -42,6 +42,8 @@ class lists
     private $list_id;
     private $list_name;
     private $active;
+    private $totalRecords;
+    private $totalDialled;
 
 
     public function __construct(PDO $pdo)
@@ -64,13 +66,25 @@ class lists
     }
 
         $query = $this->pdo->prepare("SELECT list_id FROM lists WHERE list_id=:list_id");
-        $query->bindParam(':list_id', $list_id, PDO::PARAM_STR);
+        $query->bindParam(':list_id', $this->list_id, PDO::PARAM_STR);
         $query->execute();
-        if ($query->rowCount()  > 0) {
+        if ($query->rowCount() > 0) {
 
-            $query = $this->pdo->prepare("UPDATE lists SET active=:active, fullListId=:fullListId WHERE list_id=:list_id LIMIT 1");
+            $query = $this->pdo->prepare("UPDATE lists SET totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId WHERE list_id=:list_id LIMIT 1");
+            $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
+            $query->bindParam(':totalRecords', $this->totalRecords, PDO::PARAM_STR);
             $query->bindParam(':active', $this->active, PDO::PARAM_STR);
-            $query->bindParam(':list_id', $list_id, PDO::PARAM_STR);
+            $query->bindParam(':list_id', $this->list_id, PDO::PARAM_STR);
+            $query->bindParam(':fullListId', $fullListId, PDO::PARAM_STR);
+            $query->execute();
+
+        } else {
+
+            $query = $this->pdo->prepare("INSERT INTO lists SET added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
+            $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
+            $query->bindParam(':totalRecords', $this->totalRecords, PDO::PARAM_STR);
+            $query->bindParam(':active', $this->active, PDO::PARAM_STR);
+            $query->bindParam(':list_id', $this->list_id, PDO::PARAM_STR);
             $query->bindParam(':fullListId', $fullListId, PDO::PARAM_STR);
             $query->execute();
         }
@@ -78,6 +92,15 @@ class lists
         return 'success';
 
     }
+
+    /**
+     * @param mixed $totalRecords
+     */
+    public function setTotalRecords($totalRecords)
+    {
+        $this->totalRecords = $totalRecords;
+    }
+
 
     /**
      * @param mixed $list_id
@@ -101,6 +124,14 @@ class lists
     public function setActive($active)
     {
         $this->active = $active;
+    }
+
+    /**
+     * @param mixed $totalDialled
+     */
+    public function setTotalDialled($totalDialled)
+    {
+        $this->totalDialled = $totalDialled;
     }
 
 

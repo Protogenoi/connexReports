@@ -30,9 +30,6 @@
  *
  */
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
@@ -54,11 +51,21 @@ $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-        $sendToADL->setListId($result['list_id']);
-        $sendToADL->setListName($result['list_name']);
-        $sendToADL->setActive($result['active']);
-        $sendToADL->sendListstoADL();
+        $query2 = $pdo->prepare("SELECT count(*) as totalRecords,SUM(called_count) AS totalDialled FROM list WHERE list_id=:list_id");
+        $query2->bindParam(':list_id', $result['list_id']);
+        $query2->execute();
+        if ($query2->rowCount() > 0) {
+            $result2 = $query2->fetch(PDO::FETCH_ASSOC);
 
+            $sendToADL->setListId($result['list_id']);
+            $sendToADL->setListName($result['list_name']);
+            $sendToADL->setActive($result['active']);
+            $sendToADL->setTotalRecords($result2['totalRecords']);
+            $sendToADL->setTotalDialled($result2['totalDialled']);
+            $sendToADL->sendListstoADL();
+
+
+        }
     }
 }
 
