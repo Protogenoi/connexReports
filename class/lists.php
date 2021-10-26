@@ -72,7 +72,8 @@ class lists
         $query->execute();
         if ($query->rowCount() > 0) {
 
-            $query = $this->pdo->prepare("UPDATE lists SET campaign_id=:campaignId, entryDate=:entryDate, totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId WHERE list_id=:list_id LIMIT 1");
+            $query = $this->pdo->prepare("UPDATE lists SET entryDate=:entryDate, list_name=:list_name, campaign_id=:campaignId, entryDate=:entryDate, totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId WHERE list_id=:list_id LIMIT 1");
+            $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':campaignId', $this->campaignId, PDO::PARAM_STR);
             $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
@@ -80,11 +81,14 @@ class lists
             $query->bindParam(':active', $this->active, PDO::PARAM_STR);
             $query->bindParam(':list_id', $this->list_id, PDO::PARAM_STR);
             $query->bindParam(':fullListId', $fullListId, PDO::PARAM_STR);
+            $query->bindParam(':list_name', $this->list_name, PDO::PARAM_STR);
             $query->execute();
 
         } else {
 
-            $query = $this->pdo->prepare("INSERT INTO lists SET campaign_id=:campaignId, entryDate=:entryDate, added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
+            $query = $this->pdo->prepare("INSERT INTO lists SET entryDate=:entryDate, list_name=:list_name, campaign_id=:campaignId, entryDate=:entryDate, added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
+            $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
+            $query->bindParam(':list_name', $this->list_name, PDO::PARAM_STR);
             $query->bindParam(':campaignId', $this->campaignId, PDO::PARAM_STR);
             $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
