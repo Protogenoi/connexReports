@@ -66,7 +66,8 @@ if ($query->rowCount() > 0) {
             $sendToADL->setTotalDialled($result2['totalDialled']);
             $sendToADL->sendListstoADL();
 
-
+            var_dump($sendToADL);
+            echo '<hr>';
         }
     }
 }

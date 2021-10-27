@@ -86,11 +86,10 @@ class lists
 
         } else {
 
-            $query = $this->pdo->prepare("INSERT INTO lists SET entryDate=:entryDate, list_name=:list_name, campaign_id=:campaignId, entryDate=:entryDate, added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
+            $query = $this->pdo->prepare("INSERT INTO lists SET list_name=:list_name, campaign_id=:campaignId, entryDate=:entryDate, added_by='ADL', totalDialled=:totalDialled, total_records=:totalRecords, active=:active, fullListId=:fullListId, list_id=:list_id");
             $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':list_name', $this->list_name, PDO::PARAM_STR);
             $query->bindParam(':campaignId', $this->campaignId, PDO::PARAM_STR);
-            $query->bindParam(':entryDate', $this->entryDate, PDO::PARAM_STR);
             $query->bindParam(':totalDialled', $this->totalDialled, PDO::PARAM_STR);
             $query->bindParam(':totalRecords', $this->totalRecords, PDO::PARAM_STR);
             $query->bindParam(':active', $this->active, PDO::PARAM_STR);
