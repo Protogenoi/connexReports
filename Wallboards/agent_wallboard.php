@@ -75,7 +75,7 @@ $EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
         });
     }
 
-    t = setInterval(refresh_div, 3000);
+    t = setInterval(refresh_div, 5000);
 </script>
 </head>
 <body>
