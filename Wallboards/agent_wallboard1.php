@@ -239,7 +239,7 @@ FROM
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
     LEFT JOIN outbound_log on outbound_log.uniqueid = live_agents.uniqueid
 WHERE
-    live_agents.campaign_id IN (1001)
+    live_agents.campaign_id IN (1001, 2001)
 ORDER BY live_agents.status , last_call_time
 LIMIT 70");
 
