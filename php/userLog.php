@@ -32,7 +32,9 @@ if ($query->rowCount() > 0) {
 
                 $agentName = str_replace('-', ' ', $item['full_name']);
 
-                $sendToADL->setUserLogId($item['user_log_id']);
+                if ($agentName) {
+                    $sendToADL->setUserLogId($item['user_log_id']);
+                }
                 $sendToADL->setFullName($agentName);
                 $sendToADL->setEvent($item['event']);
                 $sendToADL->setEventDate($item['event_date']);

@@ -42,6 +42,8 @@ class callTimes
     private $fullName;
     private $callCount;
     private $talkSec;
+    private $firstCall;
+    private $lastCall;
 
     public function __construct(PDO $pdo)
     {
@@ -58,16 +60,20 @@ class callTimes
         $query->execute();
         if ($query->rowCount() > 0) {
 
-            $query = $this->pdo->prepare("UPDATE callTimes SET talkSec=:talkSec, callCount=:callCount WHERE fullName=:fullName AND DATE(addedDate) = current_date()");
+            $query = $this->pdo->prepare("UPDATE callTimes SET firstCall=:firstCall, lastCall=:lastCall, talkSec=:talkSec, callCount=:callCount WHERE fullName=:fullName AND DATE(addedDate) = current_date()");
             $query->bindParam(':fullName', $this->fullName, PDO::PARAM_STR);
+            $query->bindParam(':firstCall', $this->firstCall, PDO::PARAM_STR);
+            $query->bindParam(':lastCall', $this->lastCall, PDO::PARAM_STR);
             $query->bindParam(':talkSec', $this->talkSec, PDO::PARAM_INT);
             $query->bindParam(':callCount', $this->callCount, PDO::PARAM_INT);
             $query->execute();
 
         } else {
 
-            $query = $this->pdo->prepare("INSERT INTO callTimes SET fullName=:fullName, talkSec=:talkSec, callCount=:callCount");
+            $query = $this->pdo->prepare("INSERT INTO callTimes SET firstCall=:firstCall, lastCall=:lastCall, fullName=:fullName, talkSec=:talkSec, callCount=:callCount");
             $query->bindParam(':fullName', $this->fullName, PDO::PARAM_STR);
+            $query->bindParam(':firstCall', $this->firstCall, PDO::PARAM_STR);
+            $query->bindParam(':lastCall', $this->lastCall, PDO::PARAM_STR);
             $query->bindParam(':talkSec', $this->talkSec, PDO::PARAM_INT);
             $query->bindParam(':callCount', $this->callCount, PDO::PARAM_INT);
             $query->execute();
@@ -106,5 +112,22 @@ class callTimes
     {
         $this->talkSec = $talkSec;
     }
+
+    /**
+     * @param mixed $firstCall
+     */
+    public function setFirstCall($firstCall)
+    {
+        $this->firstCall = $firstCall;
+    }
+
+    /**
+     * @param mixed $lastCall
+     */
+    public function setLastCall($lastCall)
+    {
+        $this->lastCall = $lastCall;
+    }
+
 
 }
