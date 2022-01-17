@@ -1,4 +1,22 @@
 <?php
+/**
+ * ------------------------------------------------------------------------
+ *                               ADL CRM
+ * ------------------------------------------------------------------------
+ *
+ * Copyright © 2022 ADL CRM All rights reserved.
+ *
+ * Unauthorised copying of this file, via any medium is strictly prohibited.
+ * Unauthorised distribution of this file, via any medium is strictly prohibited.
+ * Unauthorised modification of this code is strictly prohibited.
+ *
+ * Proprietary and confidential
+ *
+ * Written by Michael Owen <michael@adl-crm.uk>, 2022
+ *
+ */
+
+$start_time = microtime(true);
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -35,3 +53,7 @@ if ($query->rowCount() > 0) {
 
     }
 }
+
+$end_time = microtime(true);
+$execution_time = ($end_time - $start_time);
+echo " Execution time: " . $execution_time . " seconds";

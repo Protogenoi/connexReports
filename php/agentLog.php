@@ -1,4 +1,22 @@
 <?php
+/**
+ * ------------------------------------------------------------------------
+ *                               ADL CRM
+ * ------------------------------------------------------------------------
+ *
+ * Copyright © 2022 ADL CRM All rights reserved.
+ *
+ * Unauthorised copying of this file, via any medium is strictly prohibited.
+ * Unauthorised distribution of this file, via any medium is strictly prohibited.
+ * Unauthorised modification of this code is strictly prohibited.
+ *
+ * Proprietary and confidential
+ *
+ * Written by Michael Owen <michael@adl-crm.uk>, 2022
+ *
+ */
+
+$start_time = microtime(true);
 
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
@@ -38,7 +56,7 @@ if ($query->rowCount() > 0) {
             $sendToADL->setLeadId($item['lead_id']);
             $sendToADL->setEventTime($item['event_time']);
             $sendToADL->setAgentLogId($item['agent_log_id']);
-            $result = $sendToADL->sendAgentLogToADL();
+                $result = $sendToADL->sendAgentLogToADL();
 
             endforeach;
 
@@ -47,3 +65,7 @@ if ($query->rowCount() > 0) {
 
     }
 }
+
+$end_time = microtime(true);
+$execution_time = ($end_time - $start_time);
+echo " Execution time: " . $execution_time . " seconds";

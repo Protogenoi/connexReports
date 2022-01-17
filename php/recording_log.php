@@ -1,4 +1,20 @@
 <?php
+/**
+ * ------------------------------------------------------------------------
+ *                               ADL CRM
+ * ------------------------------------------------------------------------
+ *
+ * Copyright © 2022 ADL CRM All rights reserved.
+ *
+ * Unauthorised copying of this file, via any medium is strictly prohibited.
+ * Unauthorised distribution of this file, via any medium is strictly prohibited.
+ * Unauthorised modification of this code is strictly prohibited.
+ *
+ * Proprietary and confidential
+ *
+ * Written by Michael Owen <michael@adl-crm.uk>, 2022
+ *
+ */
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -16,12 +32,14 @@ if (empty($startTime)) {
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
 //require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
-
+#AND status IN('XFER','SALE','CALLBK')
 $query = $pdo->prepare("SELECT campaign_id, recording_id, server_ip, extension, start_time, start_epoch, end_time, end_epoch, length_in_sec, length_in_min, filename, location, lead_id, user, uniqueid, list_id, status, phone_number FROM recording_log WHERE DATE(start_time) =:startTime
-AND status IN('XFER','SALE')");
+");
 $query->bindParam(':startTime', $startTime);
 $query->execute();
 if ($query->rowCount() > 0) {
+
+    $start_time = microtime(true);
 
     require_once(BASE_URL . '/includes/ADL_PDO_CON.php');
     require_once(BASE_URL . '/class/recordingLog.php');
@@ -51,4 +69,12 @@ if ($query->rowCount() > 0) {
 
 
     }
+
+    $end_time = microtime(true);
+    $execution_time = ($end_time - $start_time);
+    echo " Execution time: " . $execution_time . " seconds";
+
 }
+
+
+
