@@ -61,7 +61,6 @@ WHERE
           'danielward',
           'GeraintMorgan',
           'kbarnett',
-          'kbarnett',
           'OliverMurphy',
           'rmichael'
           )
