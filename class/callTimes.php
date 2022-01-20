@@ -44,12 +44,21 @@ class callTimes
     private $talkSec;
     private $firstCall;
     private $lastCall;
+    private $callbacks;
 
     public function __construct(PDO $pdo)
     {
 
         $this->pdo = $pdo;
 
+    }
+
+    public function sendCallBacks()
+    {
+        $query = $this->pdo->prepare("UPDATE callTimes SET callbacks=:callbacks WHERE fullName=:fullName AND DATE(addedDate) = current_date()");
+        $query->bindParam(':fullName', $this->fullName, PDO::PARAM_STR);
+        $query->bindParam(':callbacks', $this->callbacks, PDO::PARAM_STR);
+        $query->execute();
     }
 
     public function sendCallTimesToADL()
@@ -127,6 +136,14 @@ class callTimes
     public function setLastCall($lastCall)
     {
         $this->lastCall = $lastCall;
+    }
+
+    /**
+     * @param mixed $callbacks
+     */
+    public function setCallbacks($callbacks)
+    {
+        $this->callbacks = $callbacks;
     }
 
 
