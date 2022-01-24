@@ -73,7 +73,7 @@ if ($query->rowCount() > 0) {
 
         if (!empty($result['callbackCount']) && $result['callbackCount'] >= 1) {
 
-            echo "name " . $result['full_name'] . " counts: " . $result['callbackCount'] . "<br>";
+            #echo "name " . $result['full_name'] . " counts: " . $result['callbackCount'] . "<br>";
 
             $sendToADL->setCallbacks($result['callbackCount']);
             $sendToADL->setFullName($result['full_name']);
