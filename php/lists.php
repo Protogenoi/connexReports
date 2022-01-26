@@ -33,7 +33,7 @@ require_once(BASE_URL . '/class/lists.php');
 
 $sendToADL = new lists($adlPdo);
 
-$query = $pdo->prepare("SELECT list_id, list_name, active, campaign_id FROM lists WHERE campaign_id IN(1001)");
+$query = $pdo->prepare("SELECT list_id, list_name, active, campaign_id FROM lists WHERE campaign_id IN(1001,2001)");
 $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -53,8 +53,8 @@ if ($query->rowCount() > 0) {
             $sendToADL->setTotalDialled($result2['totalDialled']);
             $sendToADL->sendListstoADL();
 
-            var_dump($sendToADL);
-            echo '<hr>';
+            #var_dump($sendToADL);
+            echo "$result[list_id]<br>";
         }
     }
 }
