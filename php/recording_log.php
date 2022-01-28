@@ -22,20 +22,21 @@ error_reporting(E_ALL);
 
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
-$startTime = filter_input(INPUT_GET, 'date', FILTER_SANITIZE_SPECIAL_CHARS);
+$startTimeVar = filter_input(INPUT_GET, 'date', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if (empty($startTime)) {
+if (empty($startTimeVar)) {
 
-    $startTime = date('Y-m-d');
+    $startTimeVar = date('Y-m-d');
 
 }
 
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
 //require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 #AND status IN('XFER','SALE','CALLBK')
-$query = $pdo->prepare("SELECT campaign_id, recording_id, server_ip, extension, start_time, start_epoch, end_time, end_epoch, length_in_sec, length_in_min, filename, location, lead_id, user, uniqueid, list_id, status, phone_number FROM recording_log WHERE DATE(start_time) =:startTime
+$query = $pdo->prepare("SELECT campaign_id, recording_id, server_ip, extension, start_time, start_epoch, end_time, end_epoch, length_in_sec, length_in_min, filename, location, lead_id, user, uniqueid, list_id, status, phone_number 
+FROM recording_log WHERE DATE(start_time) =:startTime
 ");
-$query->bindParam(':startTime', $startTime);
+$query->bindParam(':startTime', $startTimeVar);
 $query->execute();
 if ($query->rowCount() > 0) {
 
