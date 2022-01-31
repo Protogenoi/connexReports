@@ -41,7 +41,7 @@ if ($query->rowCount() > 0) {
         $talkSec = $result['talkSec'];
 
         $agentName = str_replace('-', ' ', $fullName);
-        var_dump($result);
+        #var_dump($result);
         $sendToADL = new callTimes($adlPdo);
         $sendToADL->setFullName($agentName);
         $sendToADL->setCallCount($callCount);

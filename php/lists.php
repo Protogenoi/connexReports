@@ -54,7 +54,7 @@ if ($query->rowCount() > 0) {
             $sendToADL->sendListstoADL();
 
             #var_dump($sendToADL);
-            echo "$result[list_id]<br>";
+            #echo "$result[list_id]<br>";
         }
     }
 }
