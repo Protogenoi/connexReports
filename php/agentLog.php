@@ -44,7 +44,7 @@ if ($query->rowCount() > 0) {
             foreach ($result as $item):
 
                 $agentName = str_replace('-', ' ', $item['full_name']);
-
+echo $item['status'] . "<br>";
             $sendToADL->setFullName($agentName);
             $sendToADL->setPauseSec($item['pause_sec']);
             $sendToADL->setUniqueid($item['uniqueid']);
