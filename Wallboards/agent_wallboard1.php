@@ -205,7 +205,27 @@ WHERE
         if ($lead_for_query->rowCount() > 0) {
             while ($result = $lead_for_query->fetch(PDO::FETCH_ASSOC)) {
 
-                $leadFor = strtoupper("Lead FOR $result[campaign_id]");
+                if ($result['campaign_id'] == 1000) {
+                    $inboundGroup = 'Ryan Oliver';
+                } elseif ($result['campaign_id'] == 2000) {
+                    $inboundGroup = 'Oliver Murphy';
+                } elseif ($result['campaign_id'] == 300) {
+                    $inboundGroup = 'Ashleigh Woodgate';
+                } elseif ($result['campaign_id'] == 3000) {
+                    $inboundGroup = 'Geraint Morgan';
+                } elseif ($result['campaign_id'] == 400) {
+                    $inboundGroup = 'Daniel Ward';
+                } elseif ($result['campaign_id'] == 500) {
+                    $inboundGroup = 'Tristan Clark';
+                } elseif ($result['campaign_id'] == 600) {
+                    $inboundGroup = 'Kyle Barnett';
+                } elseif ($result['campaign_id'] == 700) {
+                    $inboundGroup = 'Richard Michael';
+                } else {
+                    $inboundGroup = $result['campaign_id'];
+                }
+
+                $leadFor = strtoupper("Lead FOR $inboundGroup");
 
                 echo '<tr class="status_LEAD">';
                 echo "<td>$leadFor</td>";
