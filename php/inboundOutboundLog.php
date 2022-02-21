@@ -37,7 +37,7 @@ require_once(BASE_URL . '/class/inboundOutboundLog.php');
 $sendToADL = new inboundOutboundLog($adlPdo);
 
 $query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count 
-FROM outbound_log WHERE call_date >= CURDATE() AND campaign_id IN (1001, 1002, 2001)");
+FROM outbound_log WHERE call_date >= CURDATE() AND campaign_id = 1001");
 $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -56,6 +56,9 @@ if ($query->rowCount() > 0) {
         $sendToADL->setAltDial($result['alt_dial']);
         $sendToADL->setCalledCount($result['called_count']);
         $sendToADL->sendOutboundLogToADL();
+
+
+        #echo $result['list_id']."<br>";
 
     }
 }
