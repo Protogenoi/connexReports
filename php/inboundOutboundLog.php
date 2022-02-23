@@ -16,28 +16,23 @@
  *
  */
 
-$start_time = microtime(true);
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+#$start_time = microtime(true);
 
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
-
 $EXECUTE = filter_input(INPUT_GET, 'EXECUTE', FILTER_SANITIZE_SPECIAL_CHARS);
 
-
 require_once(BASE_URL . '/includes/CONNEX_PDO_CON.php');
-//require_once(BASE_URL . '/includes/CONNEX_PDO_CON_NEW.php');
 
 require_once(BASE_URL . '/includes/ADL_PDO_CON.php');
 require_once(BASE_URL . '/class/inboundOutboundLog.php');
 
 $sendToADL = new inboundOutboundLog($adlPdo);
 
-$query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count 
-FROM outbound_log WHERE call_date >= CURDATE() AND campaign_id = 1001");
+$query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count
+FROM outbound_log WHERE list_id=80
+
+");
 $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -57,21 +52,21 @@ if ($query->rowCount() > 0) {
         $sendToADL->setCalledCount($result['called_count']);
         $sendToADL->sendOutboundLogToADL();
 
+        $listID = $result['list_id'];
 
-        #echo $result['list_id']."<br>";
 
     }
 }
 
 
-$query = $pdo->prepare("SELECT closecallid, lead_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, called_count 
-FROM inbound_log WHERE call_date >= CURDATE()");
-
+$query = $pdo->prepare("SELECT list_id, closecallid, lead_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, called_count
+FROM inbound_log WHERE list_id=80");
 $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
         $sendToADL->setClosecallid($result['closecallid']);
+        $sendToADL->setListId($result['list_id']);
         $sendToADL->setLeadId($result['lead_id']);
         $sendToADL->setCampaignId($result['campaign_id']);
         $sendToADL->setCallDate($result['call_date']);
@@ -87,6 +82,6 @@ if ($query->rowCount() > 0) {
     }
 }
 
-$end_time = microtime(true);
-$execution_time = ($end_time - $start_time);
-echo " Execution time: " . $execution_time . " seconds";
+#$end_time = microtime(true);
+#$execution_time = ($end_time - $start_time);
+#echo " Execution time: " . $execution_time . " seconds";
