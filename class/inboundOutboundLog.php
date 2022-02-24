@@ -4,7 +4,7 @@
  *                               ADL CRM
  * ------------------------------------------------------------------------
  *
- * Copyright © 2019 ADL CRM All rights reserved.
+ * Copyright © 2022 ADL CRM All rights reserved.
  *
  * Unauthorised copying of this file, via any medium is strictly prohibited.
  * Unauthorised distribution of this file, via any medium is strictly prohibited.
@@ -12,27 +12,8 @@
  *
  * Proprietary and confidential
  *
- * Written by michael <michael@adl-crm.uk>, 09/03/2020 14:35
+ * Written by michael <michael@adl-crm.uk>, 09/01/2022 14:35
  *
- * ADL CRM makes use of the following third party open sourced software/tools:
- *  Composer - https://getcomposer.org/doc/
- *  DataTables - https://github.com/DataTables/DataTables
- *  EasyAutocomplete - https://github.com/pawelczak/EasyAutocomplete
- *  PHPMailer - https://github.com/PHPMailer/PHPMailer
- *  ClockPicker - https://github.com/weareoutman/clockpicker
- *  fpdf17 - http://www.fpdf.org
- *  summernote - https://github.com/summernote/summernote
- *  Font Awesome - https://github.com/FortAwesome/Font-Awesome
- *  Bootstrap - https://github.com/twbs/bootstrap
- *  jQuery UI - https://github.com/jquery/jquery-ui
- *  Google Dev Tools - https://developers.google.com
- *  Twitter API - https://developer.twitter.com
- *  Webshim - https://github.com/aFarkas/webshim/releases/latest
- *  toastr - https://github.com/CodeSeven/toastr
- *  Twilio - https://github.com/twilio
- *  SendGrid - https://github.com/sendgrid
- *  Ideal Postcodes - https://ideal-postcodes.co.uk/documentation
- *  Chart.js - https://github.com/chartjs/Chart.js
  */
 
 
@@ -83,8 +64,6 @@ lead_id=:lead_id1
         $query->bindParam(':term_reason', $this->term_reason, PDO::PARAM_STR);
         $query->bindParam(':alt_dial', $this->alt_dial, PDO::PARAM_STR);
         $query->bindParam(':called_count', $this->called_count, PDO::PARAM_STR);
-
-
         $query->bindParam(':lead_id1', $this->lead_id, PDO::PARAM_STR);
 
         $query->execute();
@@ -110,7 +89,7 @@ ON DUPLICATE KEY UPDATE closecallid=:closecallid1");
         $query->bindParam(':phone_number', $this->phone_number, PDO::PARAM_STR);
         $query->bindParam(':user', $this->user, PDO::PARAM_STR);
         $query->bindParam(':comments', $this->comments, PDO::PARAM_STR);
-            $query->bindParam(':term_reason', $this->term_reason, PDO::PARAM_STR);
+        $query->bindParam(':term_reason', $this->term_reason, PDO::PARAM_STR);
         $query->bindParam(':called_count', $this->called_count, PDO::PARAM_STR);
         $query->bindParam(':closecallid1', $this->closecallid, PDO::PARAM_STR);
         $query->execute();

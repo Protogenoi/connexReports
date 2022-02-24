@@ -16,7 +16,7 @@
  *
  */
 
-#$start_time = microtime(true);
+$start_time = microtime(true);
 
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
@@ -30,7 +30,7 @@ require_once(BASE_URL . '/class/inboundOutboundLog.php');
 $sendToADL = new inboundOutboundLog($adlPdo);
 
 $query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count
-FROM outbound_log WHERE list_id =76
+FROM outbound_log WHERE call_date >= CURDATE() AND campaign_id IN (1001, 2002)
 ");
 $query->execute();
 if ($query->rowCount() > 0) {
@@ -52,6 +52,7 @@ if ($query->rowCount() > 0) {
         $sendToADL->sendOutboundLogToADL();
 
         $listID = $result['list_id'];
+
 
     }
 }

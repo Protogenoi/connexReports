@@ -28,9 +28,10 @@ require_once(BASE_URL . '/includes/ADL_PDO_CON.php');
 require_once(BASE_URL . '/class/inboundOutboundLog.php');
 
 $sendToADL = new inboundOutboundLog($adlPdo);
-
+#,54,62,63,64,65,66,68,69,50,51,52,53
 $query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count
-FROM outbound_log WHERE list_id =76
+FROM outbound_log WHERE campaign_id=1001 AND list_id IN (21,47,48,49)
+
 ");
 $query->execute();
 if ($query->rowCount() > 0) {
@@ -53,10 +54,34 @@ if ($query->rowCount() > 0) {
 
         $listID = $result['list_id'];
 
+
     }
 }
 
+#,54,62,63,64,65,66,68,69,50,51,52,53,48,49
+$query = $pdo->prepare("SELECT list_id, closecallid, lead_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, called_count
+FROM inbound_log WHERE campaign_id=1001 AND list_id IN (21,47)");
+$query->execute();
+if ($query->rowCount() > 0) {
+    while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-$end_time = microtime(true);
-$execution_time = ($end_time - $start_time);
-echo " Execution time: " . $execution_time . " seconds";
+        $sendToADL->setClosecallid($result['closecallid']);
+        $sendToADL->setListId($result['list_id']);
+        $sendToADL->setLeadId($result['lead_id']);
+        $sendToADL->setCampaignId($result['campaign_id']);
+        $sendToADL->setCallDate($result['call_date']);
+        $sendToADL->setLengthInSec($result['length_in_sec']);
+        $sendToADL->setStatus($result['status']);
+        $sendToADL->setPhoneNumber($result['phone_number']);
+        $sendToADL->setUser($result['user']);
+        $sendToADL->setComments($result['comments']);
+        $sendToADL->setTermReason($result['term_reason']);
+        $sendToADL->setCalledCount($result['called_count']);
+        $sendToADL->sendInboundLogToADL();
+
+    }
+}
+
+#$end_time = microtime(true);
+#$execution_time = ($end_time - $start_time);
+#echo " Execution time: " . $execution_time . " seconds";

@@ -16,7 +16,7 @@
  *
  */
 
-#$start_time = microtime(true);
+$start_time = microtime(true);
 
 define("BASE_URL", (filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS)));
 
@@ -29,16 +29,16 @@ require_once(BASE_URL . '/class/inboundOutboundLog.php');
 
 $sendToADL = new inboundOutboundLog($adlPdo);
 
-$query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count
-FROM outbound_log WHERE list_id =76
-");
+
+$query = $pdo->prepare("SELECT list_id, closecallid, lead_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, called_count
+FROM inbound_log WHERE call_date >= CURDATE() AND campaign_id IN (1001, 2002)");
 $query->execute();
 if ($query->rowCount() > 0) {
     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-        $sendToADL->setUniqueid($result['uniqueid']);
-        $sendToADL->setLeadId($result['lead_id']);
+        $sendToADL->setClosecallid($result['closecallid']);
         $sendToADL->setListId($result['list_id']);
+        $sendToADL->setLeadId($result['lead_id']);
         $sendToADL->setCampaignId($result['campaign_id']);
         $sendToADL->setCallDate($result['call_date']);
         $sendToADL->setLengthInSec($result['length_in_sec']);
@@ -47,15 +47,11 @@ if ($query->rowCount() > 0) {
         $sendToADL->setUser($result['user']);
         $sendToADL->setComments($result['comments']);
         $sendToADL->setTermReason($result['term_reason']);
-        $sendToADL->setAltDial($result['alt_dial']);
         $sendToADL->setCalledCount($result['called_count']);
-        $sendToADL->sendOutboundLogToADL();
-
-        $listID = $result['list_id'];
+        $sendToADL->sendInboundLogToADL();
 
     }
 }
-
 
 $end_time = microtime(true);
 $execution_time = ($end_time - $start_time);
