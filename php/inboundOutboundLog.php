@@ -29,6 +29,8 @@ require_once(BASE_URL . '/class/inboundOutboundLog.php');
 
 $sendToADL = new inboundOutboundLog($adlPdo);
 
+die;
+
 $query = $pdo->prepare("SELECT uniqueid, lead_id, list_id, campaign_id, call_date, length_in_sec, status, phone_number, user, comments, term_reason, alt_dial, called_count
 FROM outbound_log WHERE list_id =76
 ");
