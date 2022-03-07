@@ -35,27 +35,39 @@ require_once(BASE_URL . '/class/agentWallboard.php');
 
 $sendToADL = new agentWallboard($adlPdo);
 
-    $Closer_query = $pdo->prepare("SELECT 
-    live_agents.status,
+$Closer_query = $pdo->prepare("SELECT * FROM (
+SELECT
     full_name,
+    TIMEDIFF(CURRENT_TIMESTAMP, event_time) AS callFinish,
+    CASE WHEN
+        live_agents.status ='CLOSER'
+        THEN 1
+        WHEN
+                live_agents.status ='PAUSED'
+            THEN 2
+         WHEN
+                 live_agents.status ='INCALL'
+             THEN 3
+         END AS status2,
+    live_agents.status,
+    live_agents.lead_id,
     TIMEDIFF(CURRENT_TIMESTAMP, last_call_time) AS Time,
     TIMEDIFF(CURRENT_TIMESTAMP, last_call_finish) AS logTime,
-    live_agents.lead_id,
     live_agents.uniqueid,
     live_agents.comments,
     sub_status,
     dead_epoch,
     dead_sec,
-    event_time,
-    TIMEDIFF(CURRENT_TIMESTAMP, event_time) AS callFinish
+    event_time
 FROM
     live_agents
         JOIN
     users ON live_agents.user = users.user
         JOIN
     agent_log ON live_agents.agent_log_id = agent_log.agent_log_id
-WHERE live_agents.campaign_id IN (1002) ORDER BY live_agents.status , callFinish DESC LIMIT 10");
-    $Closer_query->execute();
+WHERE live_agents.campaign_id IN (1002)) tbl ORDER BY status2, callFinish DESC
+");
+$Closer_query->execute();
     if ($Closer_query->rowCount() > 0) {
         while ($result = $Closer_query->fetch(PDO::FETCH_ASSOC)) {
 

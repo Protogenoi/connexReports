@@ -350,6 +350,13 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
     text-align: center;
 }
 
+.status_PAUSED13 {
+    color: white;
+    background: #3e754e;
+    font-weight: bold;
+    text-align: center;
+}
+
 .status_PAUSED10 {
     color: black;
     background-color: #F0E68C;
