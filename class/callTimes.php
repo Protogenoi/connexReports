@@ -64,7 +64,7 @@ class callTimes
     public function sendCallTimesToADL()
     {
 
-        $query = $this->pdo->prepare("SELECT id FROM callTimes WHERE fullName=:fullName AND DATE(addedDate) = current_date()");
+        $query = $this->pdo->prepare("SELECT id FROM callTimes WHERE fullName=:fullName AND DATE(addedDate) = CURDATE()");
         $query->bindParam(':fullName', $this->fullName, PDO::PARAM_STR);
         $query->execute();
         if ($query->rowCount() > 0) {
