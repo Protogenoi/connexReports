@@ -77,12 +77,12 @@ class agentLog
     public function sendAgentLogToADL()
     {
 
-        $query = $this->pdo->prepare("SELECT agent_log_id FROM agentLog WHERE agent_log_id=:agent_log_id");
+        $query = $this->pdo->prepare("SELECT agent_log_id FROM agentLog WHERE agent_log_id=:agent_log_id AND DATE(event_time) >= CURDATE()");
         $query->bindParam(':agent_log_id', $this->agent_log_id, PDO::PARAM_STR);
         $query->execute();
-        if ($query->rowCount() == 0) {
+        if ($query->rowCount() >= 1) {
 
-            $query = $this->pdo->prepare("INSERT INTO agentLog SET uniqueid=:uniqueid, event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, agent_log_id=:agent_log_id, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec");
+            $query = $this->pdo->prepare("UPDATE agentLog SET uniqueid=:uniqueid, event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec WHERE agent_log_id=:agent_log_id");
             $query->bindParam(':uniqueid', $this->uniqueid, PDO::PARAM_STR);
             $query->bindParam(':event_time', $this->event_time, PDO::PARAM_STR);
             $query->bindParam(':full_name', $this->full_name, PDO::PARAM_STR);
@@ -97,7 +97,8 @@ class agentLog
             $query->execute();
 
         } else {
-            $query = $this->pdo->prepare("UPDATE agentLog SET uniqueid=:uniqueid, event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec WHERE agent_log_id=:agent_log_id");
+
+            $query = $this->pdo->prepare("INSERT INTO agentLog SET uniqueid=:uniqueid, event_time=:event_time, lead_id=:lead_id, status=:status, dead_sec=:dead_sec, agent_log_id=:agent_log_id, full_name=:full_name, pause_sec=:pause_sec, wait_sec=:wait_sec, talk_sec=:talk_sec, dispo_sec=:dispo_sec");
             $query->bindParam(':uniqueid', $this->uniqueid, PDO::PARAM_STR);
             $query->bindParam(':event_time', $this->event_time, PDO::PARAM_STR);
             $query->bindParam(':full_name', $this->full_name, PDO::PARAM_STR);
@@ -109,7 +110,6 @@ class agentLog
             $query->bindParam(':dispo_sec', $this->dispo_sec, PDO::PARAM_INT);
             $query->bindParam(':dead_sec', $this->dead_sec, PDO::PARAM_INT);
             $query->bindParam(':lead_id', $this->lead_id, PDO::PARAM_INT);
-            $query->execute();
         }
 
         return 'success';
